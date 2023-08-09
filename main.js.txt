@@ -1,0 +1,280 @@
+$(document).ready(function () {
+    $('.submitMsg').hide(); //hide final msg
+
+    // *************Add member***************
+    let i = 0;
+    $('.family_members_div').on('click', '#btn_addMember', function () {
+        i = i + 1;
+        if (this.value == "Add Member") {
+            $(this).replaceWith('<input type="button" value="Remove Member" class="count" id="btn_dltMember">')
+            $('.family_members_div').append('<div><input type="text" id="txt_famName" name="txt_famName" class="txt_famName" placeholder="Name of Family Member"><label for="dob" id="dob">Date of Birth </label><select id="sel_fam_month" class="sel_fam_month" ><option disabled selected>Month</option><option value="January">January</option><option value="Febrary">Febrary</option><option value="March">March</option></select><select id="sel_fam_date" class="sel_fam_date" ><option disabled selected>Date</option><option value="1">1</option><option value="2">2</option><option value="3">3</option></select><select id="sel_fam_year" class="sel_fam_year"><option disabled selected>Year</option><option value="2000">2000</option><option value="2001">2001</option><option value="2002">2002</option></select><input type="text" id="txt_relationship" name="txt_relationship" class="txt_relationship" placeholder="Relationship to Patient"><input type="button" value="Add Member" class="count" id="btn_addMember"></div>');
+        }
+    });
+    // **************Remove member***************
+    $('.family_members_div').on('click', '#btn_dltMember', function () {
+        // $(this).closest('div').remove();
+        $(this).parent().remove();
+    })
+
+    // *************keypress***************
+    $("input").keypress(function () {
+        $(this).addClass('blue');
+        $(this).removeClass('redBox');
+    })
+    $('select').focus(function(){
+        $(this).addClass('blue');
+        $(this).removeClass('redBox');
+    })
+    // *************submit***************
+    function checkName(name) {
+        let result;
+        if (/^[a-zA-Z ]*$/.test(name) && name.length != 0) {
+            result = true
+        }
+        else {
+            result = false
+        }
+        return result
+    }
+    $("#btn_submit").click(function () {
+        let finalSubmit = true;
+        // *************patient information validation***************
+        let lname = $('#txt_lname').val();
+        let lnameValid = checkName(lname);
+        if (lnameValid && lname != "") {
+            $('#txt_lname').removeClass('redBox').addClass('greenBox');
+        }
+        else {
+            $('#txt_lname').removeClass('blue').addClass('redBox');
+            finalSubmit = false;
+        }
+        // fname
+        let fname = $('#txt_fname').val();
+        let fnameValid = checkName(fname);
+        if (fnameValid && fname != "") {
+            $('#txt_fname').removeClass('redBox').addClass('greenBox');
+        }
+        else {
+            $('#txt_fname').removeClass('blue').addClass('redBox');
+            finalSubmit = false;
+        }
+        // midname
+        let midname = $('#txt_midname').val();
+        let midnameValid = checkName(fname);
+        if (midnameValid && midname != "") {
+            $('#txt_midname').removeClass('redBox').addClass('greenBox');
+        }
+        else {
+            $('#txt_midname').removeClass('blue').addClass('redBox');
+            finalSubmit = false;
+        }
+        // address
+        let addres = $('#txt_address').val();
+        if (addres == "") {
+            $('#txt_address').removeClass('blue').addClass('redBox');
+            finalSubmit = false;
+        }
+        else {
+            $('#txt_address').removeClass('redBox').addClass('greenBox');
+        }
+        // city
+        let city = $('#txt_city').val();
+        let cityValid = checkName(city);
+        if (cityValid && city != "") {
+            $('#txt_city').removeClass('redBox').addClass('greenBox');
+        }
+        else {
+            $('#txt_city').removeClass('blue').addClass('redBox');
+            finalSubmit = false;
+        }
+        //state
+        let state = $('#sel_state').val()
+        if (state == null) {
+            $('#sel_state').removeClass('blue').addClass('redBox');
+            finalSubmit = false;
+        }
+        else {
+            $('#sel_state').removeClass('redBox').addClass('greenBox');
+        }
+        //zip
+        let zip = $('#txt_zip').val()
+        if (zip % 1 == 0 && zip != "") {
+            $('#txt_zip').removeClass('redBox').addClass('greenBox');
+        }
+        else {
+            $('#txt_zip').removeClass('blue').addClass('redBox');
+            finalSubmit = false;
+        }
+        //us
+        let us = $("#sel_us").val()
+        if (us == null) {
+            $('#sel_us').removeClass('blue').addClass('redBox');
+            finalSubmit = false;
+        }
+        else {
+            $('#sel_us').removeClass('redBox').addClass('greenBox');
+        }
+        //dob month
+        let month = $('#sel_month').val()
+        if (month == null) {
+            $('#sel_month').removeClass('blue').addClass('redBox');
+            finalSubmit = false;
+        }
+        else {
+            $('#sel_month').removeClass('redBox').addClass('greenBox');
+        }
+        //dob date
+        let date = $('#sel_date').val()
+        if (date == null) {
+            $('#sel_date').removeClass('blue').addClass('redBox');
+            finalSubmit = false;
+
+        }
+        else {
+            $('#sel_date').removeClass('redBox').addClass('greenBox');
+        }
+        //dob year
+        let year = $('#sel_year').val()
+        if (year == null) {
+            $('#sel_year').removeClass('blue').addClass('redBox');
+            finalSubmit = false;
+        }
+        else {
+            $('#sel_year').removeClass('redBox').addClass('greenBox');
+        }
+        //married
+        let married = $('#sel_marital').val()
+        if (married == null) {
+            $('#sel_marital').removeClass('blue').addClass('redBox');
+            finalSubmit = false;
+        }
+        else {
+            $('#sel_marital').removeClass('redBox').addClass('greenBox');
+        }
+        //mail
+        let mail = $('#txt_email').val();
+        if (mail.indexOf("@") != -1 && mail.indexOf(".") != -1 && mail.length != 0) {
+            $('#txt_email').removeClass('redBox').addClass('greenBox');
+        }
+        else {
+            $('#txt_email').removeClass('blue').addClass('redBox');
+            finalSubmit = false;
+        }
+        //primary phone number
+        let phone = $('#txt_pp_num').val();
+        let phonestr = Number(phone)
+        if (phone.length == 10 && phonestr % 1 == 0) {
+            $('#txt_pp_num').removeClass('redBox').addClass('greenBox');
+        }
+        else {
+            $('#txt_pp_num').removeClass('blue').addClass('redBox');
+            finalSubmit = false;
+        }
+        //select phone
+        let selectPhone = $('#sel_pp_info').val();
+        if (selectPhone == null) {
+            $('#sel_pp_info').removeClass('blue').addClass('redBox');
+            finalSubmit = false;
+        }
+        else {
+            $('#sel_pp_info').removeClass('redBox').addClass('greenBox');
+        }
+        //insurance
+        let insurance = $('#sel_Health_insurance').val()
+        if (insurance == null) {
+            $('#sel_Health_insurance').removeClass('blue').addClass('redBox');
+            finalSubmit = false;
+        }
+        else {
+            $('#sel_Health_insurance').removeClass('redBox').addClass('greenBox');
+        }
+
+        // *************family information validation***************
+        //fam name
+        let famNames = new Array();
+        $('.txt_famName').each(function () {
+            let famName = $(this).val();
+            let famNameValid = checkName(famName);
+            if (famNameValid && famName != "") {
+                famNames.push(famName);
+                $(this).removeClass('redBox').addClass('greenBox');
+            }
+            else {
+                $(this).removeClass('blue').addClass('redBox');
+                finalSubmit = false;
+            }
+        })
+        //relationship
+        let relations = new Array();
+        $('.txt_relationship').each(function () {
+            let relation = $(this).val();
+            if (relation != "") {
+                $(this).removeClass('redBox').addClass('greenBox');
+                relations.push(relation)
+            }
+            else {
+                $(this).removeClass('blue').addClass('redBox');
+                finalSubmit = false;
+            }
+        })
+        // fam dob
+        //dob month
+        let famMonths =new Array();
+        $('.sel_fam_month').each(function(){
+            let famMonth=$(this).val();
+            if (famMonth == null) {
+                $(this).removeClass('blue').addClass('redBox');
+                finalSubmit = false;
+            }
+            else {
+                $(this).removeClass('redBox').addClass('greenBox');
+                famMonths.push(famMonth);
+            }
+        })
+        //dob date
+        let famDates =new Array();
+        $('.sel_fam_date').each(function(){
+            let famDate=$(this).val();
+            if (famDate == null) {
+                $(this).removeClass('blue').addClass('redBox');
+                finalSubmit = false;
+            }
+            else {
+                $(this).removeClass('redBox').addClass('greenBox');
+                famDates.push(famDate);
+            }
+        })
+        //dob year
+        let famYears =new Array();
+        $('.sel_fam_year').each(function(){
+            let famYear=$(this).val();
+            if (famYear == null) {
+                $(this).removeClass('blue').addClass('redBox');
+                finalSubmit = false;
+            }
+            else {
+                $(this).removeClass('redBox').addClass('greenBox');
+                famYears.push(famYear);
+            }
+        })    
+
+        // *************submit msg result***************
+        console.log("sub" + finalSubmit)
+        let familyInfo = "";
+        $.each(famNames, function (index) {
+            familyInfo = familyInfo + "\nName: " + famNames[index] + "\nDOB: "+famDates[index]+"/"+famMonths[index]+"/"+famYears[index]+"\nRelation: " + relations[index]+"\n"
+        })
+        if (finalSubmit) {
+            $('main').hide();
+            $('.submitMsg').show();
+            //append
+            $('.submitMsg').append('<h2>PATIENT INFORMATION:</h2><br><label >Name: </label>' + fname + midname + lname + '<br><label>Address: </label>' + addres + city + '<br><label >DOB: </label>' + date + "/" + month + "/" + year + '<br><label >Marital Status: </label>'+married+'<br><label >Phone Number: </label>' + phone + '<br><br>');
+            $('.submitMsg').append('<h2>FAMILY INFORMATION:</h2>')
+            $('.submitMsg').append(familyInfo.replaceAll('\n','<br>'))
+
+        }
+    });
+
+});
+
+
